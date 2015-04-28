@@ -1,0 +1,31 @@
+{
+	"name": "groovetube",
+	"version": "0.1.0",
+	"dependencies": [{
+		"name": "angular-ui-bootstrap",
+		"version": "0.12.0",
+		"includes": ["ui-bootstrap-tpls.js"]
+	}, {
+		"name": "angularjs",
+		"version": "1.2.16",
+		"includes": ["angular.js"]
+	}, {
+		"name": "jquery",
+		"version": "2.1.1",
+		"includes": ["jquery.js"]
+	}, {
+		"name": "bootstrap",
+		"version": "3.1.1",
+		"includes": [
+			"bootstrap.css",
+			"bootstrap.js",
+			"glyphicons-halflings-regular.ttf",
+			"glyphicons-halflings-regular.woff"
+		]
+	}],
+	"repositories": {
+		"distribution": [{
+			"url": "http://build.revsys.co.uk/haven-repository"
+		}]
+	}
+}

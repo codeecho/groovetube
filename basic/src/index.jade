@@ -1,0 +1,69 @@
+include head
+script(type="text/javascript", src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js")
+body(ng-controller="DashboardCtrl")
+	div#ytWrapper
+		div#ytplayer
+		div#overlay
+			div#left-button-group
+				button.btn.btn-default.btn-lg(data-toggle="modal", data-target="#searchModal")
+					span.glyphicon.glyphicon-search(aria-hidden="true")
+					span  Search
+			div#right-button-group.btn-group
+				button.btn.btn-default.btn-lg(ng-click="playPrevious()")
+					span.glyphicon.glyphicon-backward(aria-hidden="true")
+				button.btn.btn-default.btn-lg(ng-click="playNext()")
+					span.glyphicon.glyphicon-forward(aria-hidden="true")
+				button.btn.btn-default.btn-lg(ng-click="findAlternatives()", data-toggle="modal", data-target="#alternativesModal")
+					span.glyphicon.glyphicon-retweet(aria-hidden="true")
+				button.btn.btn-default.btn-lg(onclick="$('#nowPlaying').toggle();")
+					span.glyphicon.glyphicon-headphones(aria-hidden="true")
+					span  Now Playing
+	div#searchModal.modal
+		div.modal-dialog
+			div.modal-content
+				div.modal-body
+					form.navbar-form.navbar-left(role="search")
+						div.form-group
+							input.form-control(type="text", name="artist", ng-model="formData.artist", placeholder="Artist")
+						button.btn.btn-default(ng-click="findArtist()") Search
+					table.table.table-striped(ng-if="selectedArtist == null && selectedRelease == null")
+						tr(ng-repeat="artist in searchResult.artists")
+							td 
+								a(ng-click="selectArtist(artist)") {{artist.name}}
+								small(ng-if="artist.disambiguation") {{artist.disambiguation}}
+					table.table.table-striped(ng-if="selectedArtist != null && selectedRelease == null")
+						tr
+							th.success
+								span Albums by {{selectedArtist.name}}  
+								button.btn.btn-default(ng-click="deselectArtist()") Back
+						tr(ng-repeat="release in selectedArtist.releases | orderBy:release.date")
+							td 
+								a(ng-click="selectRelease(release)") {{release.title}}
+								small {{release.date}}
+					table.table.table-striped(ng-if="selectedRelease != null")
+						tr
+							th.success
+								span {{selectedRelease.title}} by {{selectedArtist.name}}  
+								div.btn-group
+									button.btn.btn-default(ng-click="deselectRelease()") Back
+									button.btn.btn-primary(ng-click="playRelease()", data-dismiss="modal") Play
+						tr(ng-repeat="recording in selectedRelease.recordings")
+							td {{recording.title}}
+	div#alternativesModal.modal
+		div.modal-dialog
+			div.modal-content
+				div.modal-body
+					table.table.table-striped
+						tr(ng-repeat="video in alternatives")
+							td {{video.title['$t']}}
+							td
+								button.btn.btn-primary(ng-click="playVideo(video['media$group']['yt$videoid']['$t'])", data-dismiss="modal") Play
+	div#nowPlaying.col-md-3.main(style="display:none")
+		h3 Now Playing
+		table.table.table-striped(ng-if="nowPlaying != null")
+			tr
+				th 
+					span {{nowPlaying.artist.name}}: {{nowPlaying.release.title}}
+			tr(ng-repeat="recording in nowPlaying.release.recordings", ng-class="{success: $index == nowPlaying.index}")
+				td 
+					a(ng-click="playRecording($index)") {{recording.title}}
