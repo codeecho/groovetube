@@ -1,0 +1,80 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+
+#ytWrapper {
+	min-height: 100%; 
+}
+
+#ytplayer{
+	position:absolute;
+	width:100%;
+	height:100%;
+}
+
+#overlay{
+	position:absolute;
+	width:100%;
+	z-index:2;
+}
+
+#overlay #left-button-group{
+   float:left;
+}
+
+#overlay #right-button-group{
+	float:right;
+}
+
+#overlay #right-button-group button{
+	position:relative;
+	border-top:none;
+	border-top-right-radius:0px!important;
+	border-bottom-right-radius:0px!important;
+	border-top-left-radius:0px!important;
+}
+
+#overlay #left-button-group button{
+	position:relative;
+	border-top:none;
+	border-top-left-radius:0px!important;
+	border-bottom-left-radius:0px!important;
+	border-top-right-radius:0px!important;
+}
+
+.modal-dialog{
+	height:80%;
+	width:80%;
+}
+
+.modal-content {
+    height: 100%;
+}
+
+.modal-body {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+small{
+	padding-left:1em;
+	font-size:80%;
+	color:darkgray;
+}
+
+#nowPlaying{
+	position:absolute;
+	top:10%;
+	height:80%;
+	right:0px;
+	z-index:1;
+	background-color:white;
+	display:block;
+	float:right;
+	overflow-x:hidden;
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+}
