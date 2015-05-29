@@ -45,13 +45,18 @@ module.exports = function(grunt) {
           archive: 'dist/grrovetube.tar.gz'
         },
         files: [{
-            expand: true,
-            src: ['**'],
-            cwd: "dist",
-            dest: '.',
-          }
-        ]
+          expand: true,
+          src: ['**'],
+          cwd: "dist",
+          dest: '.',
+        }]
       }
+    },
+    'gh-pages': {
+      options: {
+        base: 'dist'
+      },
+      src: ['**']
     }
   });
 
@@ -62,15 +67,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-haven');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   // Tasks
   grunt.registerTask('update', ['haven:update']);
   grunt.registerTask('build', ['clean', 'jade', 'concat', 'copy']);
-  grunt.registerTask('dist', ['clean', 'jade', 'concat', 'copy', 'compress']);
-  grunt.registerTask('deploy', ['update', 'dist', 'haven:deploy']);
-
-  // Special task just for travis which skips install the artifact
-  grunt.registerTask('travis', ['haven:update:ci', 'dist', 'haven:deployOnly']);
+  grunt.registerTask('dist', ['update', 'build']);
+  grunt.registerTask('deploy', ['dist', 'gh-pages']);
 
   // Default task(s).
   grunt.registerTask('default', ['build']);
